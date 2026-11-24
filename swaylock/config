@@ -1,0 +1,47 @@
+# Swaylock config - Nighttime Purple Theme
+
+# Dark background color (no screenshots - cleaner look)
+color=0a0a12
+
+# Ring colors
+ring-color=8a64b4
+ring-ver-color=60a0b8
+ring-wrong-color=c06080
+ring-clear-color=60a090
+
+# Key highlight
+key-hl-color=c8a0e8
+bs-hl-color=c06080
+
+# Inside colors (dark)
+inside-color=15151f
+inside-ver-color=15151f
+inside-wrong-color=15151f
+inside-clear-color=15151f
+
+# Line (border between inside and ring)
+line-color=0a0a12
+line-ver-color=0a0a12
+line-wrong-color=0a0a12
+line-clear-color=0a0a12
+
+# Separator
+separator-color=8a64b4
+
+# Text
+text-color=e0e0e8
+text-ver-color=60a0b8
+text-wrong-color=c06080
+text-clear-color=60a090
+
+# Layout
+indicator-radius=120
+indicator-thickness=10
+
+# Font
+font=JetBrainsMono Nerd Font
+font-size=18
+
+# Misc
+ignore-empty-password
+show-failed-attempts

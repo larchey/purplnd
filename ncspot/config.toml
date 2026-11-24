@@ -1,0 +1,48 @@
+# ncspot config - Nighttime Purple Theme
+
+# Use PulseAudio backend
+backend = "pulseaudio"
+
+# Behavior
+[behavior]
+gapless = true
+notify = true
+default_view = "library"
+
+# Start with liked songs (Saved Tracks)
+[saved_tracks]
+default = true
+
+# Enable caching for faster loading
+[cache]
+cache_size = 2000
+
+# Nighttime purple theme
+[theme]
+background = "#0a0a12"
+primary = "#c8a0e8"
+secondary = "#8a64b4"
+title = "#e0e0e8"
+playing = "#c8a0e8"
+playing_selected = "#ffffff"
+playing_bg = "#2a1a3a"
+highlight = "#c8a0e8"
+highlight_bg = "#1a1a2a"
+error = "#c06080"
+error_bg = "#1a0a12"
+statusbar = "#b0b0c0"
+statusbar_progress = "#c8a0e8"
+statusbar_bg = "#15151f"
+cmdline = "#e0e0e8"
+cmdline_bg = "#15151f"
+search_match = "#60a0c0"
+
+# Track table format
+[track_format]
+left = "{{artist}} - {{title}}"
+right = "{{duration}}"
+center = ""
+
+# Library view
+[library]
+show_albums = true

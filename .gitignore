@@ -1,0 +1,5 @@
+*.bak*
+*.log
+*.sock
+*.tar.gz
+*.cbor

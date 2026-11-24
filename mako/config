@@ -1,0 +1,23 @@
+font=JetBrainsMono Nerd Font 11
+background-color=#0a0a0ff0
+text-color=#e0e0e8
+border-color=#8a64b4
+border-size=2
+border-radius=10
+padding=15
+margin=10
+width=350
+height=150
+default-timeout=5000
+group-by=app-name
+icon-path=/usr/share/icons/Adwaita
+max-icon-size=48
+
+[urgency=low]
+border-color=#444455
+text-color=#888899
+default-timeout=3000
+
+[urgency=high]
+border-color=#9d4edd
+default-timeout=0

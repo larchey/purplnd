@@ -1,0 +1,138 @@
+* {
+    font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free", sans-serif;
+    font-size: 13px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: rgba(10, 10, 18, 0.95);
+    border-radius: 12px;
+    border: 1px solid rgba(138, 100, 180, 0.3);
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+#workspaces {
+    margin-left: 8px;
+}
+
+#workspaces button {
+    padding: 0 8px;
+    color: #555566;
+    background: transparent;
+    border-radius: 6px;
+    margin: 4px 2px;
+    transition: all 0.2s ease;
+}
+
+#workspaces button:hover {
+    background: rgba(138, 100, 180, 0.2);
+    color: #c8a0e8;
+}
+
+#workspaces button.active {
+    background: linear-gradient(135deg, #8a64b4, #6a4c93);
+    color: #ffffff;
+    font-weight: bold;
+}
+
+#workspaces button.urgent {
+    background: #e06090;
+    color: #ffffff;
+}
+
+#window {
+    color: #777788;
+    padding: 0 12px;
+    font-weight: 500;
+}
+
+#clock {
+    color: #e0e0e8;
+    font-weight: bold;
+    padding: 0 12px;
+    background: linear-gradient(135deg, rgba(138, 100, 180, 0.15), rgba(80, 140, 160, 0.15));
+    border-radius: 8px;
+    margin: 4px 0;
+}
+
+#battery,
+#network,
+#pulseaudio,
+#backlight,
+#tray {
+    padding: 0 10px;
+    margin: 4px 2px;
+    color: #9999aa;
+}
+
+#battery {
+    color: #70c0a0;
+}
+
+#battery.charging {
+    color: #90e0b0;
+}
+
+#battery.warning:not(.charging) {
+    color: #d0a060;
+}
+
+#battery.critical:not(.charging) {
+    background: #e06090;
+    color: #ffffff;
+    border-radius: 6px;
+    animation: blink 0.5s linear infinite alternate;
+}
+
+@keyframes blink {
+    to {
+        background: transparent;
+        color: #e06090;
+    }
+}
+
+#network {
+    color: #60a0c0;
+}
+
+#network.disconnected {
+    color: #444455;
+}
+
+#pulseaudio {
+    color: #c8a0e8;
+}
+
+#pulseaudio.muted {
+    color: #444455;
+}
+
+#backlight {
+    color: #d0b080;
+}
+
+#tray {
+    margin-right: 8px;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+
+tooltip {
+    background: rgba(10, 10, 18, 0.98);
+    border: 1px solid #8a64b4;
+    border-radius: 8px;
+}
+
+tooltip label {
+    color: #e0e0e8;
+    padding: 4px;
+}
