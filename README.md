@@ -1,4 +1,4 @@
-# Hyprland Nighttime Purple Theme - Dotfiles
+# purplnd - Hyprland Nighttime Purple Theme
 
 A complete Hyprland desktop configuration with a dark purple/nighttime aesthetic.
 
@@ -12,15 +12,16 @@ A complete Hyprland desktop configuration with a dark purple/nighttime aesthetic
 
 | Component | Description |
 |-----------|-------------|
-| `hypr/` | Hyprland WM config, keybindings, startup script |
-| `waybar/` | Status bar with purple gradient theme |
+| `hypr/` | Hyprland WM config, keybindings, startup layout, copy/paste and on-screen volume/brightness scripts |
+| `waybar/` | Status bar with purple gradient theme and a click-to-stay-awake (caffeine) toggle |
 | `wofi/` | Application launcher styling |
 | `kitty/` | Terminal with nighttime color scheme |
-| `mako/` | Notification daemon |
+| `mako/` | Notification daemon, including the volume/brightness popup |
 | `swaylock/` | Lock screen |
 | `btop/` | System monitor with custom theme |
 | `ncspot/` | Spotify TUI client theme |
-| `neofetch/` | System info display |
+| `neofetch/` | System info display, with owl |
+| `herdr/` | herdr terminal workspace config |
 | `sddm-theme/` | Login screen theme |
 
 ## Keybindings
@@ -32,7 +33,10 @@ A complete Hyprland desktop configuration with a dark purple/nighttime aesthetic
 | `Super + Space` | App launcher (wofi) |
 | `Super + Q` | Close window |
 | `Super + F` | Fullscreen |
-| `Super + V` | Toggle floating |
+| `Super + C` | Copy (Ctrl+Shift+C in terminals) |
+| `Super + V` | Paste (needs `wtype`) |
+| `Super + Shift + C` | Clipboard history (clipman) |
+| `Super + Shift + Space` | Toggle floating |
 | `Super + Escape` | Lock screen |
 | `Super + Shift + E` | Exit Hyprland |
 
@@ -66,6 +70,8 @@ A complete Hyprland desktop configuration with a dark purple/nighttime aesthetic
 └─────────────┴─────────────┘
 ```
 
+Workspace 2 opens herdr (expects `~/.local/bin/herdr`).
+
 ## Installation
 
 ### 1. Install Dependencies (RHEL/Fedora)
@@ -75,9 +81,10 @@ A complete Hyprland desktop configuration with a dark purple/nighttime aesthetic
 sudo dnf install epel-release
 
 # Core packages
-sudo dnf install hyprland waybar wofi kitty mako swaylock swaybg \
-                 grim slurp wl-clipboard brightnessctl playerctl \
-                 btop neofetch NetworkManager-applet
+sudo dnf install hyprland waybar wofi kitty mako swaylock swaybg swayidle \
+                 grim slurp wl-clipboard clipman wtype jq libnotify \
+                 brightnessctl playerctl btop neofetch network-manager-applet \
+                 jetbrains-mono-fonts
 
 # Fonts
 mkdir -p ~/.local/share/fonts
@@ -94,19 +101,12 @@ cargo install ncspot
 ### 2. Install Configs
 
 ```bash
-# Run the install script
+# Full install (packages, font, configs, login theme)
 ./install.sh
 
-# Or manually:
-cp -r hypr ~/.config/
-cp -r waybar ~/.config/
-cp -r wofi ~/.config/
-cp -r kitty ~/.config/
-cp -r mako ~/.config/
-cp -r swaylock ~/.config/
-cp -r btop ~/.config/
-cp -r ncspot ~/.config/
-cp -r neofetch ~/.config/
+# Or only symlink the configs into ~/.config.
+# Existing files are moved to ~/.config-backup-<timestamp> first.
+./install.sh --link-only
 
 # SDDM theme (requires sudo)
 sudo cp -r sddm-theme /usr/share/sddm/themes/nighttime
@@ -114,51 +114,15 @@ sudo chmod -R 755 /usr/share/sddm/themes/nighttime
 echo -e "[Theme]\nCurrent=nighttime" | sudo tee /etc/sddm.conf.d/theme.conf
 ```
 
-### 3. Make startup script executable
-
-```bash
-chmod +x ~/.config/hypr/startup.sh
-```
+The configs are symlinks into this folder, so edits show up in `git diff` right
+away. Keep the folder where it is, or rerun `./install.sh --link-only` after
+moving it. The login theme is a copy; reinstall it after editing.
 
 ## Notes
 
 - **Scaling**: Set to 1.5x for HiDPI displays. Change in `hypr/hyprland.conf` line 4
 - **Monitor**: Auto-detected. Modify `monitor =` line for multi-monitor setups
 - **Apple Keyboard**: Volume/brightness use fallback Super+F-key bindings
+- **Login font**: the SDDM owl needs a system-wide monospace font (`jetbrains-mono-fonts`); fonts in `~/.local` are not readable by SDDM
+- **hypridle.conf** is not used; idle handling is `swayidle` in `hyprland.conf`
 - **ncspot**: Requires Spotify Premium account
-
-## File Structure
-
-```
-hyprland-dotfiles/
-├── README.md
-├── install.sh
-├── hypr/
-│   ├── hyprland.conf      # Main config
-│   ├── hypridle.conf      # Idle/lock timers
-│   └── startup.sh         # Startup layout script
-├── waybar/
-│   ├── config             # Bar modules
-│   └── style.css          # Purple theme
-├── wofi/
-│   ├── config
-│   └── style.css
-├── kitty/
-│   └── kitty.conf         # Terminal theme
-├── mako/
-│   └── config             # Notifications
-├── swaylock/
-│   └── config             # Lock screen
-├── btop/
-│   ├── btop.conf
-│   └── themes/
-│       └── nighttime.theme
-├── ncspot/
-│   └── config.toml        # Spotify client
-├── neofetch/
-│   └── config.conf
-└── sddm-theme/
-    ├── Main.qml
-    ├── metadata.desktop
-    └── theme.conf
-```

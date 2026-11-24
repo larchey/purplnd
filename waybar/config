@@ -9,7 +9,7 @@
 
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
     "modules-center": ["clock"],
-    "modules-right": ["tray", "pulseaudio", "backlight", "battery", "network"],
+    "modules-right": ["tray", "idle_inhibitor", "pulseaudio", "backlight", "battery", "network"],
 
     "hyprland/workspaces": {
         "format": "{icon}",
@@ -74,6 +74,16 @@
         },
         "on-click": "pavucontrol",
         "scroll-step": 5
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "󰅶",
+            "deactivated": "󰾪"
+        },
+        "tooltip-format-activated": "Caffeine on: screen stays awake",
+        "tooltip-format-deactivated": "Caffeine off: normal idle/lock"
     },
 
     "backlight": {

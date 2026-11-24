@@ -21,3 +21,19 @@ default-timeout=3000
 [urgency=high]
 border-color=#9d4edd
 default-timeout=0
+
+# Volume/brightness popup, sent by ~/.config/hypr/scripts/osd.sh
+[app-name=osd]
+anchor=bottom-center
+layer=overlay
+outer-margin=0,0,80,0
+width=320
+height=100
+font=JetBrainsMono Nerd Font 22
+text-alignment=center
+progress-color=source #6a4c93
+format=%s
+icons=0
+history=0
+default-timeout=1500
+group-by=none

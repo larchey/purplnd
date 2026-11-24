@@ -58,13 +58,19 @@ Rectangle {
         spacing: 15
         width: 280
 
-        // User greeting
+        // Owl (same art as ~/.config/neofetch/owl.txt).
+        // Must be a monospace font the sddm user can read (the Nerd Font lives
+        // in ~/.local and is not), and left-aligned: AlignHCenter would center
+        // every line on its own and shear the drawing. The block as a whole is
+        // centered by the anchor instead.
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
-            font.family: "JetBrainsMono Nerd Font"
+            font.family: "JetBrains Mono"
             font.pointSize: 14
             color: "#8a64b4"
-            text: "Welcome"
+            textFormat: Text.PlainText
+            horizontalAlignment: Text.AlignLeft
+            text: " ___\n(o,o)\n{`\"'}\n-\"-\"-"
         }
 
         // Username
@@ -87,6 +93,8 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 clip: true
+  		activeFocusOnTab: true
+		KeyNavigation.tab: password
                 onAccepted: password.forceActiveFocus()
             }
         }
@@ -111,6 +119,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 clip: true
+		activeFocusOnTab: true
                 focus: true
                 onAccepted: sddm.login(username.text, password.text, sessionModel.lastIndex)
             }

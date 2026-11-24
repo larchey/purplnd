@@ -59,6 +59,7 @@ window#waybar.hidden {
 }
 
 #battery,
+#idle_inhibitor,
 #network,
 #pulseaudio,
 #backlight,
@@ -112,6 +113,17 @@ window#waybar.hidden {
 
 #backlight {
     color: #d0b080;
+}
+
+#idle_inhibitor {
+    font-size: 16px;
+    color: #555566;
+}
+
+#idle_inhibitor.activated {
+    color: #e0c080;
+    background: rgba(224, 192, 128, 0.18);
+    border-radius: 6px;
 }
 
 #tray {

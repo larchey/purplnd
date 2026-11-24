@@ -13,6 +13,31 @@ echo -e "${PURPLE}║  Hyprland Nighttime Theme Installer    ║${NC}"
 echo -e "${PURPLE}╚════════════════════════════════════════╝${NC}"
 echo ""
 
+# Link each tracked config into ~/.config. Anything already there that isn't
+# our link is moved to a timestamped backup folder first.
+link_configs() {
+    local backup="$HOME/.config-backup-$(date +%Y%m%d-%H%M%S)" f dest
+    while IFS= read -r f; do
+        dest="$HOME/.config/$f"
+        [ "$(readlink -f "$dest")" = "$SCRIPT_DIR/$f" ] && continue
+        if [ -e "$dest" ] || [ -L "$dest" ]; then
+            mkdir -p "$backup/$(dirname "$f")"
+            mv "$dest" "$backup/$f"
+        fi
+        mkdir -p "$(dirname "$dest")"
+        ln -s "$SCRIPT_DIR/$f" "$dest"
+        echo "  linked ~/.config/$f"
+    done < <(cd "$SCRIPT_DIR" && find hypr waybar wofi kitty mako swaylock btop ncspot neofetch herdr \
+                 -type f ! -name '*.bak*' | sort)
+    [ -d "$backup" ] && echo "Replaced files saved in $backup"
+    return 0
+}
+
+if [ "${1:-}" = "--link-only" ]; then
+    link_configs
+    exit 0
+fi
+
 # Detect distro
 if [ -f /etc/redhat-release ]; then
     DISTRO="rhel"
@@ -38,9 +63,10 @@ read -p "Install packages via dnf? (y/n) " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     sudo $PKG_MGR install -y \
-        hyprland waybar wofi kitty mako swaybg swaylock \
-        grim slurp wl-clipboard brightnessctl playerctl \
-        btop neofetch network-manager-applet \
+        hyprland waybar wofi kitty mako swaybg swaylock swayidle \
+        grim slurp wl-clipboard clipman wtype jq libnotify \
+        brightnessctl playerctl btop neofetch network-manager-applet \
+        jetbrains-mono-fonts \
         2>/dev/null || echo "Some packages may not be available"
 fi
 
@@ -60,19 +86,7 @@ fi
 
 # Copy configs
 echo -e "${GREEN}[4/5]${NC} Installing configs..."
-mkdir -p ~/.config
-
-cp -r "$SCRIPT_DIR/hypr" ~/.config/
-cp -r "$SCRIPT_DIR/waybar" ~/.config/
-cp -r "$SCRIPT_DIR/wofi" ~/.config/
-cp -r "$SCRIPT_DIR/kitty" ~/.config/
-cp -r "$SCRIPT_DIR/mako" ~/.config/
-cp -r "$SCRIPT_DIR/swaylock" ~/.config/
-cp -r "$SCRIPT_DIR/btop" ~/.config/
-cp -r "$SCRIPT_DIR/ncspot" ~/.config/ 2>/dev/null || true
-cp -r "$SCRIPT_DIR/neofetch" ~/.config/
-
-chmod +x ~/.config/hypr/startup.sh
+link_configs
 
 echo "Configs installed to ~/.config/"
 
